@@ -10,8 +10,14 @@
 
         @foreach ($employee -> tasks as $task)
 
-          <li>{{ $task -> title }}</li>
+          <li>
+            <a href="{{ route('employee.remove.task', [$employee -> id, $task -> id]) }}">x</a>
+            {{-- <a href="{{ route('task.show', $task-> id) }}">{{ $task -> title }}</a> --}}
+            {{ $task -> title }}: {{ $task -> description }}
+          </li>
         @endforeach
+        <a href="{{ route('employee.edit', $employee -> id) }}">Edit</a>
+        <a href="{{ route('employee.delete', $employee -> id) }}">Delete</a>
       </ul>
 
 

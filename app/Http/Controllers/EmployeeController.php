@@ -66,7 +66,9 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+      $employee = Employee::findOrFail($id);
+      $tasks = Task::all();
+      return view('pages.edit-employee', compact('employee','tasks'));
     }
 
     /**
@@ -78,7 +80,13 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $data = $request -> all();
+      $employee = Employee::findOrFail($id);
+      $employee -> update($data);
+      $tasks = Task::find($data['tasks']);
+      $employee -> tasks() -> sync($tasks);
+
+      return redirect() -> route('employee.index');
     }
 
     /**
@@ -89,6 +97,16 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $employee = Employee::findOrFail($id);
+
+      // $tasks = $employee -> task;
+      // foreach ($tasks as $task) {
+      //   $employee -> taks() -> detach($taks);
+      // }
+      $employee -> tasks() -> detach();
+
+      $employee -> delete();
+
+      return redirect() -> route('employee.index');
     }
 }
