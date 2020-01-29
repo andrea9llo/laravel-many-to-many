@@ -16,9 +16,10 @@ class MyController extends Controller
     return redirect() -> route('employee.index');
   }
 
-  // public function showTask($id)
-  // {
-  //   $task = Task::findOrFail($id);
-  //   return view('pages.show-task', compact('task'));
-  // }
+  public function showTask($idt,$ide)
+  {
+    $task = Task::findOrFail($idt);
+    $employee = Employee::findOrFail($ide);
+    return view('pages.show-task', compact('task','employee'));
+  }
 }

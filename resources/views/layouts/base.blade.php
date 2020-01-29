@@ -6,7 +6,7 @@
   </head>
   <body>
     <header>
-      <h1>Header</h1>
+      <h1><a href="{{route('employee.index')}}">Header</a></h1>
     </header>
     @yield('content')
     <footer>

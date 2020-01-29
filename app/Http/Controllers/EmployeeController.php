@@ -41,8 +41,12 @@ class EmployeeController extends Controller
       $data = $request -> all();
 
       $employee = Employee::create($data);
-      $tasks = Task::find($data['tasks']);
-      $employee -> tasks() -> attach($tasks);
+      
+      if (isset($data['tasks'])) {
+        $tasks = Task::find($data['tasks']);
+        $employee -> tasks() -> attach($tasks);
+      }
+
 
       return redirect() -> route('employee.index');
     }

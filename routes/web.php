@@ -18,4 +18,4 @@ Route::post('/employee/{id}/update' , 'EmployeeController@update') -> name('empl
 Route::get('/employee/{id}/delete' , 'EmployeeController@destroy') -> name('employee.delete');
 
 Route::get('/employee/{ide}/remove/task/{idt}' , 'MyController@removeTaskFromEmpl') -> name('employee.remove.task');
-Route::get('/task/{id}/show' , 'MyController@showTask') -> name('task.show');
+Route::get('/task/{idt}/show/employee/{ide}' , 'MyController@showTask') -> name('task.show');

@@ -1,14 +1,17 @@
-{{-- @extends('layouts.base')
+@extends('layouts.base')
 
 @section('content')
-  <div class="employee">
 
-      <h3>Dipendente: {{ $task-> employees -> name }} </h3>
-      <p>Lavoro da svolgere:</p>
+  <div class="employee">
+        <h3>{{ $employee -> name }} {{ $employee -> lastname }}</h3>
+      <h4>Lavoro da svolgere:</h4>
       <ul>
 
           <li>
             {{ $task -> title }}
+          </li>
+          <li>
+            {{ $task -> description }}
           </li>
 
       </ul>
@@ -16,4 +19,4 @@
 
   </div><br><br>
 
-@endsection --}}
+@endsection

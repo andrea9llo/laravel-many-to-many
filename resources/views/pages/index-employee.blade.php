@@ -3,17 +3,17 @@
 @section('content')
   <div class="employee">
     <a href="{{ route('employee.create') }}">New Employee</a>
+    <h2>Dipendenti:</h2>
     @foreach ($employees as $employee)
-      <h3>Dipendente: {{ $employee -> name }} {{ $employee -> lastname }}</h3>
-      <p>Lavoro da svolgere:</p>
+      <h3> {{ $employee -> name }} {{ $employee -> lastname }}</h3>
+      <h4>Lavoro da svolgere:</h4>
       <ul>
 
         @foreach ($employee -> tasks as $task)
 
           <li>
             <a href="{{ route('employee.remove.task', [$employee -> id, $task -> id]) }}">x</a>
-            {{-- <a href="{{ route('task.show', $task-> id) }}">{{ $task -> title }}</a> --}}
-            {{ $task -> title }}: {{ $task -> description }}
+            <a href="{{ route('task.show', [$task-> id, $employee -> id]) }}">{{ $task -> title }}</a>
           </li>
         @endforeach
         <a href="{{ route('employee.edit', $employee -> id) }}">Edit</a>
