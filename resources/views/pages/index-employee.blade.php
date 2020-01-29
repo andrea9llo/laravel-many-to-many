@@ -20,7 +20,7 @@
         <a href="{{ route('employee.delete', $employee -> id) }}">Delete</a>
       </ul>
 
-
+      <hr>
     @endforeach
   </div><br><br>
 
