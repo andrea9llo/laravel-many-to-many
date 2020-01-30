@@ -20,6 +20,17 @@ class AddFk extends Migration
         $table -> foreign('task_id', 'employee_task_tasks') -> references('id') -> on('tasks');
 
       });
+
+      Schema::table('employees', function (Blueprint $table) {
+        $table -> bigInteger('user_id') -> unsigned() -> index();
+        $table -> foreign('user_id', 'employee_user_id') -> references('id') -> on('users');
+      });
+
+      Schema::table('user_infos', function (Blueprint $table) {
+        $table -> bigInteger('user_id') -> unsigned() -> index();
+        $table -> foreign('user_id', 'user_infos_user_id') -> references('id') -> on('users');
+      });
+
     }
 
     /**
@@ -34,6 +45,14 @@ class AddFk extends Migration
         $table -> dropForeign('employee_task_tasks');
         $table -> dropColumn('employee_id');
         $table -> dropColumn('task_id');
+      });
+      Schema::table('employees', function (Blueprint $table) {
+        $table -> dropForeign('employee_user_id');
+        $table -> dropColumn('user_id');
+      });
+      Schema::table('user_infos', function (Blueprint $table) {
+        $table -> dropForeign('user_infos_user_id');
+        $table -> dropColumn('user_id');
       });
     }
 }

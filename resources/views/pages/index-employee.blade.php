@@ -2,7 +2,10 @@
 
 @section('content')
   <div class="employee">
-    <a href="{{ route('employee.create') }}">New Employee</a>
+    @auth
+
+      <a href="{{ route('employee.create') }}">New Employee</a>
+    @endauth
     <h2>Dipendenti:</h2>
     @foreach ($employees as $employee)
       <h3> {{ $employee -> name }} {{ $employee -> lastname }}</h3>
@@ -12,13 +15,24 @@
         @foreach ($employee -> tasks as $task)
 
           <li>
-            <a href="{{ route('employee.remove.task', [$employee -> id, $task -> id]) }}">x</a>
+            @auth
+              @if (Auth::user() -> id == $employee -> user -> id)
+                <a href="{{ route('employee.remove.task', [$employee -> id, $task -> id]) }}">x</a>
+              @endif
+
+            @endauth
             <a href="{{ route('task.show', [$task-> id, $employee -> id]) }}">{{ $task -> title }}</a>
           </li>
         @endforeach
-        <a href="{{ route('employee.edit', $employee -> id) }}">Edit</a>
-        <a href="{{ route('employee.delete', $employee -> id) }}">Delete</a>
+        @auth
+          @if (Auth::user() -> id == $employee -> user -> id)
+            <a href="{{ route('employee.edit', $employee -> id) }}">Edit</a>
+            <a href="{{ route('employee.delete', $employee -> id) }}">Delete</a>
+          @endif
+
+        @endauth
       </ul>
+      <p>Datore lavoro <b>{{ $employee -> user -> name }}</b> </p>
 
       <hr>
     @endforeach

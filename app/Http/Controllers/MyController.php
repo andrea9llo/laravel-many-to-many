@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class MyController extends Controller
 {
@@ -21,5 +23,25 @@ class MyController extends Controller
     $task = Task::findOrFail($idt);
     $employee = Employee::findOrFail($ide);
     return view('pages.show-task', compact('task','employee'));
+  }
+
+  public function saveImg(Request $request)
+  {
+
+    $file = $request -> file('image');
+    $filename = $file -> getClientOriginalName();
+
+    $file -> move('image', $filename);
+
+    $newUserData = [
+
+      'image' => $filename
+
+    ];
+
+    Auth::user() -> update($newUserData);
+    return redirect() -> route('employee.index');
+
+
   }
 }

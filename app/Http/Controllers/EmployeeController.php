@@ -5,6 +5,7 @@ use App\Employee;
 use App\Task;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -40,8 +41,13 @@ class EmployeeController extends Controller
     {
       $data = $request -> all();
 
-      $employee = Employee::create($data);
-      
+      // $employee = Employee::create($data);
+      $user = Auth::user();
+      $employee = Employee::make($data);
+      $employee -> user() -> associate($user);
+      $employee -> save();
+
+
       if (isset($data['tasks'])) {
         $tasks = Task::find($data['tasks']);
         $employee -> tasks() -> attach($tasks);
@@ -87,7 +93,12 @@ class EmployeeController extends Controller
       $data = $request -> all();
       $employee = Employee::findOrFail($id);
       $employee -> update($data);
-      $tasks = Task::find($data['tasks']);
+      if (isset($data['tasks'])) {
+        $tasks = Task::find($data['tasks']);
+        $employee -> tasks() -> attach($tasks);
+      } else {
+        $tasks = [];
+      }
       $employee -> tasks() -> sync($tasks);
 
       return redirect() -> route('employee.index');
